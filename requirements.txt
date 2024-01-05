@@ -3,4 +3,5 @@ numpy==1.26.3
 dash==2.10.0
 plotly==5.16.0
 gunicorn==20.1.0
+openpyxl==3.0.10
 cython==0.29.24

@@ -433,7 +433,7 @@ fig9.update_layout(title_text="PLDs SUBMERCADO (R$/MWh)", template='plotly')
 # css
 app.layout = html.Div(children=[
     
-    html.Img(src='assets/vale3.png', alt='image', width = '650'),
+    html.Img(src='assets/vale3.PNG', alt='image', width = '650'),
     
     #html.H1(children='RDH - IPDO - PLD', style={"text-align": "center"}),
 

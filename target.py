@@ -409,7 +409,7 @@ fig8.add_trace(
     go.Scatter(x=df_final['data'], y=df_final['PLD_N'], name="PLD_NORTE"),)
 
 #Add figure title
-fig8.update_layout(title_text="PLDs SUBMERCADO (R$/MWh)", template='plotly')
+fig8.update_layout(title_text="PLDs SUBMERCADO - MÉDIA DIÁRIA (R$/MWh)", template='plotly')
 #Set x-axis title
 #fig.update_xaxes(title_text="xaxis title")
 #Set y-axes titles
@@ -428,12 +428,113 @@ fig9 = go.Figure(data=[go.Table(header=dict(values=['Data', 'PLD_SECO', 'PLD_SUL
                  cells=dict(values=[df_final['data'], df_final['PLD_SECO'], df_final['PLD_SUL'], df_final['PLD_NE'], df_final['PLD_N']]))
                      ])
 
-fig9.update_layout(title_text="PLDs SUBMERCADO (R$/MWh)", template='plotly')
+fig9.update_layout(title_text="PLDs SUBMERCADO - MÉDIA DIÁRIA (R$/MWh)", template='plotly')
+
+# Calcular média mensal
+
+df = pd.read_excel(r'assets/testepld.xlsx')
+
+df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y')
+df.set_index('data', inplace=True)
+df_resampled = df.resample('M').mean()
+df_resampled = df_resampled.round(2)
+df_resampled['MesAno'] = df_resampled.index.strftime('%b/%Y')
+
+# Calcular média anual
+df_resampled_anual = df.resample('Y').mean()
+df_resampled_anual['Ano'] = df_resampled_anual.index.year.astype(int)
+df_resampled_anual = df_resampled_anual.round(2)
+
+# Criar nova coluna de ano para garantir apenas anos inteiros
+df_resampled_anual['AnoInteiro'] = df_resampled_anual.index.to_period('Y').astype(str)
+
+# Plotar gráfico plotly mensal
+
+fig10 = make_subplots(specs=[[{"secondary_y": False}]])
+
+fig10.add_trace(
+    go.Scatter(x=df_resampled['MesAno'], y=df_resampled['PLD_SECO'], name="PLD_SECO"),)
+
+fig10.add_trace(
+    go.Scatter(x=df_resampled['MesAno'], y=df_resampled['PLD_SUL'], name="PLD_SUL"),)
+
+fig10.add_trace(
+    go.Scatter(x=df_resampled['MesAno'], y=df_resampled['PLD_NE'], name="PLD_NE"),)
+
+fig10.add_trace(
+    go.Scatter(x=df_resampled['MesAno'], y=df_resampled['PLD_N'], name="PLD_NORTE"),)
+
+
+#Add figure title
+fig10.update_layout(title_text="PLDs SUBMERCADO - MÉDIA MENSAL (R$/MWh)", template='plotly')
+#Set x-axis title
+#fig.update_xaxes(title_text="xaxis title")
+#Set y-axes titles
+fig10.update_yaxes(title_text="<b>PLD</b> (R$/MWh)")
+
+#py.offline.plot(fig, filename="C:\\Users\\Bernardo\\Downloads\\ena_carga_pld.html")
+
+
+###PLDs MENSAIS SUBMERCADO
+###PLDs MENSAIS SUBMERCADO
+###PLDs MENSAIS SUBMERCADO
+
+
+
+fig11 = go.Figure(data=[go.Table(header=dict(values=['MesAno', 'PLD_SECO', 'PLD_SUL', 'PLD_NE', 'PLD_NORTE']),
+                 cells=dict(values=[df_resampled['MesAno'], df_resampled['PLD_SECO'], df_resampled['PLD_SUL'], df_resampled['PLD_NE'], df_resampled['PLD_N']]))
+                     ])
+
+fig11.update_layout(title_text="PLDs SUBMERCADO - MÉDIA MENSAL (R$/MWh)", template='plotly')
+
+
+
+
+# Plotar gráfico plotly anual
+
+fig12 = make_subplots(specs=[[{"secondary_y": False}]])
+
+fig12.add_trace(
+    go.Scatter(x=df_resampled_anual['AnoInteiro'], y=df_resampled_anual['PLD_SECO'], name="PLD_SECO"),)
+
+fig12.add_trace(
+    go.Scatter(x=df_resampled_anual['AnoInteiro'], y=df_resampled_anual['PLD_SUL'], name="PLD_SUL"),)
+
+fig12.add_trace(
+    go.Scatter(x=df_resampled_anual['AnoInteiro'], y=df_resampled_anual['PLD_NE'], name="PLD_NE"),)
+
+fig12.add_trace(
+    go.Scatter(x=df_resampled_anual['AnoInteiro'], y=df_resampled_anual['PLD_N'], name="PLD_NORTE"),)
+
+
+#Add figure title
+fig12.update_layout(title_text="PLDs SUBMERCADO - MÉDIA ANUAL (R$/MWh)", template='plotly')
+#Set x-axis title
+#fig.update_xaxes(title_text="xaxis title")
+#Set y-axes titles
+fig12.update_yaxes(title_text="<b>PLD</b> (R$/MWh)")
+
+#py.offline.plot(fig, filename="C:\\Users\\Bernardo\\Downloads\\ena_carga_pld.html")
+
+###PLDs ANUAIS SUBMERCADO
+###PLDs ANUAIS SUBMERCADO
+###PLDs ANUAIS SUBMERCADO
+
+
+
+fig13 = go.Figure(data=[go.Table(header=dict(values=['Ano', 'PLD_SECO', 'PLD_SUL', 'PLD_NE', 'PLD_NORTE']),
+                 cells=dict(values=[df_resampled_anual['Ano'], df_resampled_anual['PLD_SECO'], df_resampled_anual['PLD_SUL'], df_resampled_anual['PLD_NE'], df_resampled_anual['PLD_N']]))
+                     ])
+
+fig13.update_layout(title_text="PLDs SUBMERCADO - MÉDIA ANUAL (R$/MWh)", template='plotly')
+
+
+
 
 # css
-app.layout = html.Div(children=[
+layout1 = html.Div(children=[
     
-    html.Img(src='assets/vale3.PNG', alt='image', width = '650'),
+    html.Img(src='assets/vale3.png', alt='image', width = '650'),
     
     #html.H1(children='RDH - IPDO - PLD', style={"text-align": "center"}),
 
@@ -453,9 +554,156 @@ app.layout = html.Div(children=[
     dcc.Graph(id='vendas_por_loja5',figure=fig5),
     dcc.Graph(id='vendas_por_loja6',figure=fig8),
     dcc.Graph(id='vendas_por_loja7',figure=fig9),
-    
+    dcc.Graph(id='vendas_por_loja10',figure=fig10),
+    dcc.Graph(id='vendas_por_loja11',figure=fig11),
+    dcc.Graph(id='vendas_por_loja12',figure=fig12),
+    dcc.Graph(id='vendas_por_loja13',figure=fig13),    
     
 ])
+
+
+# callbacks
+# Adicione a rota raiz para o Dash
+#app.config.suppress_callback_exceptions = True
+
+
+######################### comeca aqui o segundo dash########################
+
+
+#import dash
+#from dash import dcc, html
+#from dash.dependencies import Input, Output
+#import plotly.graph_objects as go
+#import pandas as pd
+import plotly.express as px
+#
+# Função para converter datas explicitamente
+def convert_date(date_str):
+    try:
+        return pd.to_datetime(date_str, format='%d/%m/%Y', dayfirst=True)
+    except ValueError:
+        # Se não for possível converter para data, retorna a string original
+        return date_str
+
+# DataFrame
+df = pd.read_csv(r'assets/csv_historico_pld.csv', sep=';', decimal=',', converters={'Hora': convert_date})
+
+# Lista de colunas de datas
+colunas_datas = [coluna for coluna in df.columns if (coluna != 'Hora' and coluna != 'Submercado')]
+
+# Paleta de cores automática do Plotly
+cores_series = px.colors.qualitative.Set1  # Você pode escolher outras paletas do Plotly
+
+
+# Layout da aplicação
+layout2 = html.Div([
+    html.Label("Selecione o dia:"),
+    dcc.Dropdown(
+        id='variavel-dropdown',
+        options=[
+            {'label': coluna, 'value': coluna} for coluna in colunas_datas
+        ],
+        value=colunas_datas[-1] if colunas_datas else None  # Valor padrão se houver colunas_datas, caso contrário, None
+    ),
+    dcc.Graph(id='line-plot')
+])
+
+# Callback para atualizar o gráfico com base na variável selecionada
+@app.callback(
+    Output('line-plot', 'figure'),
+    [Input('variavel-dropdown', 'value')]
+)
+def update_graph(selected_variavel):
+    if not selected_variavel:
+        # Se não houver variável selecionada, retorne um gráfico vazio
+        return go.Figure()
+
+    fig = go.Figure()
+
+    for i, submercado in enumerate(df['Submercado'].unique()):
+        filtered_df = df[df['Submercado'] == submercado]
+        cor_serie = cores_series[i % len(cores_series)]  # Ciclo de cores para as séries
+        fig.add_trace(go.Scatter(x=filtered_df['Hora'], y=filtered_df[selected_variavel].astype(float), mode='lines+markers', name=submercado, line=dict(color=cor_serie)))
+
+    # Adicionar marcador para a média após a última hora
+    media_por_submercado = df.groupby('Submercado')[selected_variavel].apply(lambda x: x.astype(float).mean())
+    for submercado, media in media_por_submercado.items():
+        cor_serie = cores_series[df['Submercado'].unique().tolist().index(submercado) % len(cores_series)]  # Obter a cor correspondente
+        fig.add_trace(go.Scatter(x=[24], y=[media], mode='markers', marker=dict(color=cor_serie), name=f'Média {submercado}', showlegend=False))
+
+    fig.update_layout(
+        title=f'Gráfico do PLD do dia {selected_variavel}',
+        xaxis_title='Hora',
+        yaxis_title='R$/MWh',
+        xaxis=dict(
+            tickmode='array',
+            tickvals=list(range(24)) + [24],
+            ticktext=list(map(str, range(24))) + ['Média'],
+            tickangle=-40
+        )
+    )
+
+    return fig
+
+#########################################
+
+dfmercado = pd.read_excel(r'assets/me3.xlsx')
+
+
+# Callback para atualizar o gráfico com base nas colunas selecionadas
+@app.callback(
+    Output('line-plot2', 'figure'),
+    [Input('column-dropdown2', 'value')]
+)
+def update_graph(selected_columns):
+    trace_list = []
+    for col in selected_columns:
+        trace = dict(
+            x=dfmercado['data'],
+            y=dfmercado[col],
+            mode='lines',
+            name=col
+        )
+        trace_list.append(trace)
+
+    layout = dict(
+        title='Preço de Mercado',
+        xaxis=dict(tickangle=-80,tickformat='%d-%m-%Y', tickfont=dict(size=10)),
+        yaxis=dict(title='R$/MWh'),
+        hovermode='closest'
+    )
+
+    return dict(data=trace_list, layout=layout)
+
+
+# Layout do aplicativo
+layout3 = html.Div([
+    html.Label("Selecione o produto:"),
+    dcc.Dropdown(
+        id='column-dropdown2',
+        options=[{'label': col, 'value': col} for col in dfmercado.columns[1:]],
+        value=['FEN - SE CON ANU JAN/24 DEZ/24 - Preço Fixo'],
+        multi=True
+    ),
+    dcc.Graph(id='line-plot2')
+])
+
+
+
+##########################################
+
+
+
+
+# Layout geral
+app.layout = html.Div(children=[
+    
+    # Áreas específicas de cada Dashboard
+    layout1,
+    layout2,
+    layout3,
+])
+
 
 # callbacks
 # Adicione a rota raiz para o Dash

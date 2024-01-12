@@ -4,7 +4,7 @@ import plotly.graph_objects as px
 import pandas as pd
 from plotly.subplots import make_subplots
 import plotly.graph_objs as go
-from dash.dependencies import Output
+from dash import Dash, Input, Output
 import numpy as np
 
 app = Dash(__name__) # criando o seu aplicativo Dash

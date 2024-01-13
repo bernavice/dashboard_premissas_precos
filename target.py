@@ -535,7 +535,7 @@ fig13.update_layout(title_text="PLDs SUBMERCADO - MÉDIA ANUAL (R$/MWh)", templa
 # css
 layout1 = html.Div(children=[
     
-    html.Img(src='assets/vale3.png', alt='image', width = '650'),
+    html.Img(src='assets/vale.png', alt='image', width = '650'),
     
     #html.H1(children='RDH - IPDO - PLD', style={"text-align": "center"}),
 

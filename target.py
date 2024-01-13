@@ -26,6 +26,7 @@ df_final = pd.merge(df_ultima_update_pld_bd0, df_rdh_ipdo, how = 'left', on = 'd
 
 dfmercado = pd.read_excel(r'assets/me3.xlsx')
 df_final = pd.merge(df_final, dfmercado, how = 'left', on = 'data')
+df_final.fillna(method='ffill', inplace=True)
 
 
 #display(df_ultima_update_pld_bd0)

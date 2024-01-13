@@ -674,11 +674,18 @@ def update_graph(selected_columns):
         hovermode='closest'
     )
 
-    return dict(data=trace_list, layout=layout)
+
+    # Criando um gráfico responsivo
+    figure = go.Figure(data=trace_list, layout=layout)
+    figure.update_layout(responsive=True)
+
+    return Figure
+
+    #return dict(data=trace_list, layout=layout)
 
 
-# Layout do aplicativo
-layout3 = html.Div([
+# Layout3 - Responsivo usando Bootstrap
+layout3 = html.Div(className="container", children=[
     html.Label("Selecione o produto:"),
     dcc.Dropdown(
         id='column-dropdown2',
@@ -688,6 +695,19 @@ layout3 = html.Div([
     ),
     dcc.Graph(id='line-plot2')
 ])
+
+
+## Layout do aplicativo
+#layout3 = html.Div([
+#    html.Label("Selecione o produto:"),
+#    dcc.Dropdown(
+#        id='column-dropdown2',
+#        options=[{'label': col, 'value': col} for col in dfmercado.columns[1:]],
+#        value=['FEN - SE CON ANU JAN/24 DEZ/24 - Preço Fixo'],
+#        multi=True
+#    ),
+#    dcc.Graph(id='line-plot2')
+#])
 
 
 

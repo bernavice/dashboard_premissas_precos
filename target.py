@@ -100,6 +100,37 @@ fig.add_trace(
     secondary_y=False,)
 
 
+fig.add_trace(
+    go.Scatter(x=df_final['data'], y=df_final['FEN - SE CON ANU JAN/24 DEZ/24 - Preço Fixo'], name="PM 2024"),
+    secondary_y=True,)
+
+fig.add_trace(
+    go.Scatter(x=df_final['data'], y=df_final['FEN - SE CON ANU JAN/25 DEZ/25 - Preço Fixo'], name="PM 2025"),
+    secondary_y=True,)
+
+fig.add_trace(
+    go.Scatter(x=df_final['data'], y=df_final['FEN - SE CON ANU JAN/26 DEZ/26 - Preço Fixo'], name="PM 2026"),
+    secondary_y=True,)
+
+fig.add_trace(
+    go.Scatter(x=df_final['data'], y=df_final['FEN - SE CON ANU JAN/27 DEZ/27 - Preço Fixo'], name="PM 2027"),
+    secondary_y=True,)
+
+fig.add_trace(
+    go.Scatter(x=df_final['data'], y=df_final['FEN - SE CON ANU JAN/28 DEZ/28 - Preço Fixo'], name="PM 2028"),
+    secondary_y=True,)
+
+
+fig.add_trace(
+    go.Scatter(x=df_final['data'], y=df_final['FEN - SE CON SEM JAN/24 JUN/24 - Preço Fixo'], name="PM 1S24"),
+    secondary_y=True,)
+
+
+fig.add_trace(
+    go.Scatter(x=df_final['data'], y=df_final['FEN - SE CON SEM JUL/24 DEZ/24 - Preço Fixo'], name="PM 2S24"),
+    secondary_y=True,)
+
+
 #Add figure title
 fig.update_layout(title_text="PLD (R$/MWh), Geração e Afluência (MWm)", template='plotly')
 #Set x-axis title

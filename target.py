@@ -648,6 +648,16 @@ def update_graph(selected_variavel):
 
 #########################################
 
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+from dash.dependencies import Input, Output
+import plotly.express as px
+import pandas as pd
+import plotly.graph_objects as go
+
+
+
 dfmercado = pd.read_excel(r'assets/me3.xlsx')
 
 

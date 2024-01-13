@@ -687,15 +687,14 @@ def update_graph(selected_columns):
 
     # Criando um gráfico responsivo
     figure = go.Figure(data=trace_list, layout=layout)
-    figure.update_layout(responsive=True)
 
-    return Figure
+    return figure
 
     #return dict(data=trace_list, layout=layout)
 
 
 # Layout3 - Responsivo usando Bootstrap
-layout3 = html.Div(className="container", children=[
+layout3 = html.Div(className="container-fluid", children=[
     html.Label("Selecione o produto:"),
     dcc.Dropdown(
         id='column-dropdown2',

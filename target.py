@@ -893,21 +893,21 @@ nomes_das_chaves = resultados.keys()
 #for curva, df_resultante in resultados.items():
     #print(f'\nDataFrame {curva}:\n{df_resultante}')
 
-valor_da_chave1 = resultados['Curva A']
+#valor_da_chave1 = resultados['Curva A']
 #print(valor_da_chave1)  # Saída: valor1
 
 df_C = resultados['Curva C']
 df_C['Time'] = pd.to_datetime(df_C['Time']).dt.strftime('%b/%Y')
-print(df_C)
+#print(df_C)
 
 # Dicionário de tradução dos meses
-meses_em_ingles = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
-meses_em_portugues = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
+#meses_em_ingles = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+#meses_em_portugues = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
 
-traducao_meses = dict(zip(meses_em_portugues, meses_em_ingles))
+#traducao_meses = dict(zip(meses_em_portugues, meses_em_ingles))
 
 ## Substitua 'seu_dataframe' pelo nome real do seu DataFrame
-df_C['Time'] = df_C['Time'].apply(lambda x: datetime.strptime(x, '%b/%Y').replace(month=meses_em_portugues.index(x[:3]) + 1).strftime('%b/%Y').capitalize())
+#df_C['Time'] = df_C['Time'].apply(lambda x: datetime.strptime(x, '%b/%Y').replace(month=meses_em_portugues.index(x[:3]) + 1).strftime('%b/%Y').capitalize())
 
 
 
@@ -921,6 +921,8 @@ df_A['Time'] = pd.to_datetime(df_A['Time']).dt.strftime('%b/%Y')
 resultado_A = pd.concat([df_bd, resultados['Curva A']], axis=0)
 resultado_B = pd.concat([resultado_A, resultados['Curva B']], axis=0)
 resultado_C = pd.concat([resultado_B, df_C], axis=0)
+
+resultado_C['Time'] = pd.to_datetime(resultado_C['Time']).dt.strftime('%b/%Y')
 
 
 

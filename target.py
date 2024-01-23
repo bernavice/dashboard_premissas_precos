@@ -216,6 +216,35 @@ fig2.update_layout(title_text="Balanço de energia (MWm)")
 #Gráfico reservatórios
 #Gráfico reservatórios
 
+import locale
+
+# Configurar o local para português do Brasil
+locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
+
+
+
+
+# DataFrame CAR
+df2_data = {'mes_x': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
+            'Curva C': ['24.6', '32.9', '41.3', '42.7', '42.1', '40.5', '37.8', '33.9', '29.4', '23.8', '21.4', '21.9'],
+            'Curva B': ['34.3', '42', '49.7', '50.2', '48.9', '46.6', '43', '38.2', '33', '25.9', '21.4', '28.1'],
+            'Curva A': ['45', '51.8', '58.6', '58.6', '56.9', '54.4', '50', '43.5', '37.6', '28.7', '21.4', '39.5']}
+
+df2 = pd.DataFrame(df2_data)
+
+df2['mes_x'] = df2['mes_x'].astype('int')
+df_final['mes_x'] = df_final['mes_x'].astype('int')
+
+#Mesclar os DataFrames df1 e df2
+df_final = pd.merge(df_final, df2.set_index('mes_x'), left_on='mes_x', right_index=True)
+
+#df_final = df_final.drop('Unnamed: 0.1', axis=1)
+
+df_final['data'] = pd.to_datetime(df_final['data'], format='%d/%m/%Y')
+
+df_final = df_final.sort_values(by='data')
+
+df_final['data'] = df_final['data'].dt.strftime('%d/%m/%Y')
 
 condicoes = [(df_final['mes_x'] == 1), 
              (df_final['mes_x'] == 2), 

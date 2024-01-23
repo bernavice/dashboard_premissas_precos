@@ -326,9 +326,26 @@ data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8]
 
 #layout = go.layout(title:'% do Armazenamento máximo dos reservatórios (MWm) %EARmáx', yaxis={'%EARmáx'})
 
-fig3 = go.Figure(data=data, layout=go.Layout(title=go.layout.Title(text="% do Armazenamento máximo dos reservatórios (MWm) %EARmáx")))
+#layout = go.layout(title:'% do Armazenamento máximo dos reservatórios (MWm) %EARmáx', yaxis={'%EARmáx'})
 
-fig3.update_yaxes(title = "% EARmáx")
+fig3 = go.Figure(
+    data=data,
+    layout=go.Layout(
+        title=go.layout.Title(text="% do Armazenamento máximo dos reservatórios (MWm) %EARmáx"),
+        yaxis=dict(title="% EARmáx"),
+        annotations=[
+            dict(
+                xref='paper', yref='paper',
+                x=0.5, y=-0.1,
+                xanchor='right', yanchor='top',
+                text='Curva A = Mínimo de 9,3 GWm de Térmicas \n, Curva B = Mínimo de 14 GWm de Térmicas \n, Curva C = Mínimo de 18 GWm de Térmicas',
+                showarrow=False,
+                font=dict(size=12)
+            )
+        ]
+    )
+)
+
 
 #df_final = df_final.astype({"dia_x": int, "mes_x": int})
 df_final = df_final.astype({"dia_x": str, "mes_x": str})

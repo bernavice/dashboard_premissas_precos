@@ -500,6 +500,8 @@ fig10.add_trace(
 fig10.add_trace(
     go.Scatter(x=df_resampled['MesAno'], y=df_resampled['PLD_N'], name="PLD_NORTE"),)
 
+for trace in fig10.data:
+    trace.mode = 'markers+lines'
 
 #Add figure title
 fig10.update_layout(title_text="PLDs SUBMERCADO - MÉDIA MENSAL (R$/MWh)", template='plotly')

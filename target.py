@@ -218,6 +218,8 @@ fig2.update_layout(title_text="Balanço de energia (MWm)")
 
 import locale
 
+locale.setlocale(locale.LC_TIME, 'C')
+
 # Configurar o local para português do Brasil
 locale.setlocale(locale.LC_TIME, 'pt_BR.UTF-8')
 

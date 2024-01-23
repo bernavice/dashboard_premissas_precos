@@ -633,7 +633,8 @@ cores_series = px.colors.qualitative.Set1  # Você pode escolher outras paletas 
 
 # Layout da aplicação
 layout2 = html.Div([
-    html.Label("Selecione o dia:"),
+    html.H3("PLD Horário - Submercado (R$/MWh)", style={'font-family': 'Arial, sans-serif', 'font-weight': 'normal'}),
+    html.Label("Selecione o dia:", style={'font-family': 'Arial, sans-serif', 'font-weight': 'normal'}),
     dcc.Dropdown(
         id='variavel-dropdown',
         options=[
@@ -729,8 +730,9 @@ def update_graph(selected_columns):
 
 
 # Layout3 - Responsivo usando Bootstrap
-layout3 = html.Div(className="container-fluid", children=[
-    html.Label("Selecione o produto:"),
+layout3 = html.Div([
+    html.H3("Preço de Mercado (R$/MWh)", style={'font-family': 'Arial, sans-serif', 'font-weight': 'normal'}),  # Título do gráfico
+    html.Label("Selecione o produto:", style={'font-family': 'Arial, sans-serif', 'font-weight': 'normal'}),
     dcc.Dropdown(
         id='column-dropdown2',
         options=[{'label': col, 'value': col} for col in dfmercado.columns[1:]],

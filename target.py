@@ -898,6 +898,7 @@ valor_da_chave1 = resultados['Curva A']
 
 df_C = resultados['Curva C']
 df_C['Time'] = pd.to_datetime(df_C['Time']).dt.strftime('%b/%Y')
+print(df_C)
 
 # Dicionário de tradução dos meses
 #meses_em_ingles = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']

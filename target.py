@@ -909,6 +909,18 @@ resultado_A = pd.concat([df_bd, resultados['Curva A']], axis=0)
 resultado_B = pd.concat([resultado_A, resultados['Curva B']], axis=0)
 resultado_C = pd.concat([resultado_B, df_C], axis=0)
 
+
+# Dicionário de tradução dos meses
+meses_em_ingles = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+meses_em_portugues = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
+
+traducao_meses = dict(zip(meses_em_ingles, meses_em_portugues))
+
+# Substitua 'seu_dataframe' pelo nome real do seu DataFrame
+resultado_C['Time'] = resultado_C['Time'].apply(lambda x: datetime.strptime(x, '%b/%Y').replace(month=meses_em_portugues.index(x[:3]) + 1).strftime('%b/%Y').capitalize())
+
+
+
 dfbd = resultado_C
 
 

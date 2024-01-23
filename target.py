@@ -838,8 +838,10 @@ layout3 = html.Div([
 ##########################################
 
 import locale
+from locale import setlocale, LC_TIME
 
 locale.setlocale(locale.LC_TIME, 'C')
+setlocale(LC_TIME, 'pt_BR.utf-8')
 
 df_bd = pd.read_excel(r'assets/bd_rodada.xlsx')
 

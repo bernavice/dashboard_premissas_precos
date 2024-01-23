@@ -904,7 +904,7 @@ print(df_C)
 meses_em_ingles = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 meses_em_portugues = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
 
-traducao_meses = dict(zip(meses_em_ingles, meses_em_portugues))
+traducao_meses = dict(zip(meses_em_portugues, meses_em_ingles))
 
 ## Substitua 'seu_dataframe' pelo nome real do seu DataFrame
 df_C['Time'] = df_C['Time'].apply(lambda x: datetime.strptime(x, '%b/%Y').replace(month=meses_em_portugues.index(x[:3]) + 1).strftime('%b/%Y').capitalize())

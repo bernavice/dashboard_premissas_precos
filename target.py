@@ -296,7 +296,33 @@ trace5 = go.Scatter(x=df_filtro_ano['mes_extenso'],
                     mode = 'markers+lines',
                     name = 'earsin_2024',);
 
-data = [trace1, trace2, trace3, trace4, trace5]
+df_filtro_ano = df_final[(df_final['ano_x'] == 2023)]
+trace6= go.Scatter(x=df_filtro_ano['mes_extenso'],
+                    y=df_filtro_ano['Curva A'],
+                    mode = 'markers+lines',
+                    name = 'Curva C',
+                    marker=dict(color='gray', size=11),
+                    line=dict(color='gray', width=4, dash='dash'));
+
+df_filtro_ano = df_final[(df_final['ano_x'] == 2023)]
+trace7= go.Scatter(x=df_filtro_ano['mes_extenso'],
+                    y=df_filtro_ano['Curva B'],
+                    mode = 'markers+lines',
+                    name = 'Curva C',
+                    marker=dict(color='Tan', size=11),
+                    line=dict(color='Tan', width=4, dash='dash'));
+
+df_filtro_ano = df_final[(df_final['ano_x'] == 2023)]
+trace8= go.Scatter(x=df_filtro_ano['mes_extenso'],
+                    y=df_filtro_ano['Curva C'],
+                    mode = 'markers+lines',
+                    name = 'Curva C',
+                    marker=dict(color='black', size=11),
+                    line=dict(color='black', width=4, dash='dash'));
+
+
+
+data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8]
 
 #layout = go.layout(title:'% do Armazenamento máximo dos reservatórios (MWm) %EARmáx', yaxis={'%EARmáx'})
 

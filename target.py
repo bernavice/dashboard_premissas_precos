@@ -837,6 +837,9 @@ layout3 = html.Div([
 ###GRáfico com as projeções###############
 ##########################################
 
+import locale
+
+locale.setlocale(locale.LC_TIME, 'C')
 
 df_bd = pd.read_excel(r'assets/bd_rodada.xlsx')
 

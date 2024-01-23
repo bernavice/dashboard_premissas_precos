@@ -837,76 +837,7 @@ layout3 = html.Div([
 ###GRáfico com as projeções###############
 ##########################################
 
-
-df_bd = pd.read_excel(r'assets/bd_rodada.xlsx')
-
-# DataFrame A
-A_data = {
-    'Time': ['2024-01-01', '2024-02-01', '2024-03-01', '2024-04-01', '2024-05-01', '2024-06-01', '2024-07-01', '2024-08-01', '2024-09-01', '2024-10-01', '2024-11-01', '2024-12-01'],
-    'mes_x': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-    'Curva A': ['24.6', '32.9', '41.3', '42.7', '42.1', '40.5', '37.8', '33.9', '29.4', '23.8', '21.4', '21.9'],
-    'Curva B': ['34.3', '42', '49.7', '50.2', '48.9', '46.6', '43', '38.2', '33', '25.9', '21.4', '28.1'],
-    'Curva C': ['45', '51.8', '58.6', '58.6', '56.9', '54.4', '50', '43.5', '37.6', '28.7', '21.4', '39.5'],
-    'Variável': ['0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0', '0.0'],
-    'Valor': [0.0] * 12
-}
-
-A = pd.DataFrame(A_data)
-
-# DataFrame B
-B_data = {
-    'mes_x': ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-    'Curva A': ['24.6', '32.9', '41.3', '42.7', '42.1', '40.5', '37.8', '33.9', '29.4', '23.8', '21.4', '21.9'],
-    'Curva B': ['34.3', '42', '49.7', '50.2', '48.9', '46.6', '43', '38.2', '33', '25.9', '21.4', '28.1'],
-    'Curva C': ['45', '51.8', '58.6', '58.6', '56.9', '54.4', '50', '43.5', '37.6', '28.7', '21.4', '39.5']
-}
-
-B = pd.DataFrame(B_data)
-
-
-
-# Listas de colunas para cada Curva
-curvas = ['Curva A', 'Curva B', 'Curva C']
-
-# Dicionário para armazenar DataFrames resultantes
-resultados = {}
-
-# Loop para criar DataFrames C, D, e E
-for curva in curvas:
-    # Criar DataFrame temporário
-    df_temp = pd.DataFrame({'Time': A['Time'], 'Variável': curva, 'Valor': A[curva]})
-    
-    # Adicionar ao dicionário de resultados
-    resultados[curva] = df_temp[['Time', 'Variável', 'Valor']]
-    
-    
-nomes_das_chaves = resultados.keys()
-#print(nomes_das_chaves)
-
-# Exibir DataFrames resultantes
-#for curva, df_resultante in resultados.items():
-    #print(f'\nDataFrame {curva}:\n{df_resultante}')
-
-valor_da_chave1 = resultados['Curva A']
-#print(valor_da_chave1)  # Saída: valor1
-
-df_C = resultados['Curva C']
-df_C['Time'] = pd.to_datetime(df_C['Time']).dt.strftime('%b/%Y')
-
-df_B = resultados['Curva B']
-df_B['Time'] = pd.to_datetime(df_B['Time']).dt.strftime('%b/%Y')
-
-df_A = resultados['Curva A']
-df_A['Time'] = pd.to_datetime(df_A['Time']).dt.strftime('%b/%Y')
-
-
-resultado_A = pd.concat([df_bd, resultados['Curva A']], axis=0)
-resultado_B = pd.concat([resultado_A, resultados['Curva B']], axis=0)
-resultado_C = pd.concat([resultado_B, df_C], axis=0)
-
-dfbd = resultado_C
-
-
+dfbd = pd.read_excel(r'assets/bd_rodada.xlsx')
 #display(df)
 
 # Inicializando com a seleção de "PLD SE/CO VE"

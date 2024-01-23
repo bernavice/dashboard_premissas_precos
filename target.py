@@ -837,6 +837,7 @@ layout3 = html.Div([
 ###GRáfico com as projeções###############
 ##########################################
 
+from datetime import datetime
 import locale
 from locale import setlocale, LC_TIME
 

@@ -758,6 +758,50 @@ layout3 = html.Div(className="container-fluid", children=[
 ##########################################
 
 
+dfbd = pd.read_excel(r'assets/bd_rodada.xlsx')
+#display(df)
+
+# Inicializando com a seleção de "PLD SE/CO VE"
+variavel_selecionada = ["PLD SE/CO VE"]
+
+
+# Layout do aplicativo
+layout4 = html.Div([
+     html.H3("Resultados simulação - Selecione uma variável", style={'font-family': 'Arial, sans-serif', 'font-weight': 'normal'}),  # Título do gráfico
+     html.Label("Selecione a variável:", style={'font-family': 'Arial, sans-serif', 'font-weight': 'normal'}),
+    # Dropdown para selecionar variável (múltipla seleção)
+    dcc.Dropdown(
+        id='variavel-dropdown4',
+        options=[{'label': variavel, 'value': variavel} for variavel in dfbd['Variável'].unique()],
+        value=variavel_selecionada,
+        multi=True,
+    ),
+    # Gráfico de linhas e marcadores (scatter plot)
+    dcc.Graph(id='line-plot4'),
+])
+
+# Callback para atualizar o gráfico com base na variável selecionada
+@app.callback(
+    Output('line-plot4', 'figure'),
+    [Input('variavel-dropdown4', 'value')]
+)
+def update_line_plot(selected_variaveis):
+    # Filtrando o DataFrame com base nas variáveis selecionadas
+    filtered_df = dfbd[dfbd['Variável'].isin(selected_variaveis)]
+
+    # Criando o gráfico de linhas e marcadores
+    fig = go.Figure()
+    for variavel in selected_variaveis:
+        temp_df = filtered_df[filtered_df['Variável'] == variavel]
+        fig.add_trace(go.Scatter(y=temp_df['Valor'], x=temp_df['Time'],mode='lines+markers', name=variavel))
+
+    # Configurando o título dinâmico para o eixo y
+    y_axis_title = " "#f'{",".join(selected_variaveis)}'
+    fig.update_layout(yaxis_title=y_axis_title)
+
+    return fig
+
+##########################################
 
 
 # Layout geral
@@ -767,6 +811,7 @@ app.layout = html.Div(children=[
     layout1,
     layout2,
     layout3,
+    layout4,
 ])
 
 

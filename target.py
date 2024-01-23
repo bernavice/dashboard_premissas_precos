@@ -756,7 +756,8 @@ layout3 = html.Div(className="container-fluid", children=[
 
 
 ##########################################
-
+###GRáfico com as projeções###############
+##########################################
 
 dfbd = pd.read_excel(r'assets/bd_rodada.xlsx')
 #display(df)

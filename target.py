@@ -939,6 +939,8 @@ def padronizar_data(data):
 # Aplica a função à coluna 'Time'
 resultado_C['Time'] = resultado_C['Time'].apply(padronizar_data)
 
+resultado_C['Valor'] = resultado_C['Valor'].astype('float') 
+
 #resultado_C['Time'] = pd.to_datetime(resultado_C['Time'], format='%b/%Y')
 
 #resultado_C['Time'] = pd.to_datetime(resultado_C['Time']).dt.strftime('%b/%Y')

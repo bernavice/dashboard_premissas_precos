@@ -922,6 +922,8 @@ resultado_A = pd.concat([df_bd, resultados['Curva A']], axis=0)
 resultado_B = pd.concat([resultado_A, resultados['Curva B']], axis=0)
 resultado_C = pd.concat([resultado_B, df_C], axis=0)
 
+print(resultado_C)
+
 resultado_C['Time'] = pd.to_datetime(resultado_C['Time'], format='%b/%Y')
 
 resultado_C['Time'] = pd.to_datetime(resultado_C['Time']).dt.strftime('%b/%Y')

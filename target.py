@@ -924,9 +924,24 @@ resultado_C = pd.concat([resultado_B, df_C], axis=0)
 
 print(resultado_C)
 
-resultado_C['Time'] = pd.to_datetime(resultado_C['Time'], format='%b/%Y')
+# Dicionário de tradução dos meses
+traducao_meses = {'Jan': 'jan', 'Feb': 'fev', 'Mar': 'mar', 'Apr': 'abr', 'May': 'mai', 'Jun': 'jun', 'Jul': 'jul', 'Aug': 'ago', 'Sep': 'set', 'Oct': 'out', 'Nov': 'nov', 'Dec': 'dez'}
 
-resultado_C['Time'] = pd.to_datetime(resultado_C['Time']).dt.strftime('%b/%Y')
+# Função para padronizar o formato das datas
+def padronizar_data(data):
+    # Separa o mês e o ano
+    mes, ano = data.split('/')
+    # Traduz o mês usando o dicionário
+    mes_traduzido = traducao_meses.get(mes.capitalize(), mes)
+    # Retorna a data formatada
+    return f"{mes_traduzido}/{ano}"
+
+# Aplica a função à coluna 'Time'
+resultado_C['Time'] = resultado_C['Time'].apply(padronizar_data)
+
+#resultado_C['Time'] = pd.to_datetime(resultado_C['Time'], format='%b/%Y')
+
+#resultado_C['Time'] = pd.to_datetime(resultado_C['Time']).dt.strftime('%b/%Y')
 
 
 

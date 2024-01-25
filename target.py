@@ -837,9 +837,12 @@ layout3 = html.Div([
 ###GRáfico com as projeções###############
 ##########################################
 
+from datetime import datetime
 import locale
+from locale import setlocale, LC_TIME
 
 locale.setlocale(locale.LC_TIME, 'C')
+#setlocale(LC_TIME, 'pt_BR.utf-8')
 
 df_bd = pd.read_excel(r'assets/bd_rodada.xlsx')
 
@@ -890,11 +893,23 @@ nomes_das_chaves = resultados.keys()
 #for curva, df_resultante in resultados.items():
     #print(f'\nDataFrame {curva}:\n{df_resultante}')
 
-valor_da_chave1 = resultados['Curva A']
+#valor_da_chave1 = resultados['Curva A']
 #print(valor_da_chave1)  # Saída: valor1
 
 df_C = resultados['Curva C']
 df_C['Time'] = pd.to_datetime(df_C['Time']).dt.strftime('%b/%Y')
+#print(df_C)
+
+# Dicionário de tradução dos meses
+#meses_em_ingles = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+#meses_em_portugues = ['jan', 'fev', 'mar', 'abr', 'mai', 'jun', 'jul', 'ago', 'set', 'out', 'nov', 'dez']
+
+#traducao_meses = dict(zip(meses_em_portugues, meses_em_ingles))
+
+## Substitua 'seu_dataframe' pelo nome real do seu DataFrame
+#df_C['Time'] = df_C['Time'].apply(lambda x: datetime.strptime(x, '%b/%Y').replace(month=meses_em_portugues.index(x[:3]) + 1).strftime('%b/%Y').capitalize())
+
+
 
 df_B = resultados['Curva B']
 df_B['Time'] = pd.to_datetime(df_B['Time']).dt.strftime('%b/%Y')
@@ -906,6 +921,32 @@ df_A['Time'] = pd.to_datetime(df_A['Time']).dt.strftime('%b/%Y')
 resultado_A = pd.concat([df_bd, resultados['Curva A']], axis=0)
 resultado_B = pd.concat([resultado_A, resultados['Curva B']], axis=0)
 resultado_C = pd.concat([resultado_B, df_C], axis=0)
+
+print(resultado_C)
+
+# Dicionário de tradução dos meses
+traducao_meses = {'Jan': 'jan', 'Feb': 'fev', 'Mar': 'mar', 'Apr': 'abr', 'May': 'mai', 'Jun': 'jun', 'Jul': 'jul', 'Aug': 'ago', 'Sep': 'set', 'Oct': 'out', 'Nov': 'nov', 'Dec': 'dez'}
+
+# Função para padronizar o formato das datas
+def padronizar_data(data):
+    # Separa o mês e o ano
+    mes, ano = data.split('/')
+    # Traduz o mês usando o dicionário
+    mes_traduzido = traducao_meses.get(mes.capitalize(), mes)
+    # Retorna a data formatada
+    return f"{mes_traduzido}/{ano}"
+
+# Aplica a função à coluna 'Time'
+resultado_C['Time'] = resultado_C['Time'].apply(padronizar_data)
+
+resultado_C['Valor'] = resultado_C['Valor'].astype('float') 
+
+#resultado_C['Time'] = pd.to_datetime(resultado_C['Time'], format='%b/%Y')
+
+#resultado_C['Time'] = pd.to_datetime(resultado_C['Time']).dt.strftime('%b/%Y')
+
+
+
 
 dfbd = resultado_C
 

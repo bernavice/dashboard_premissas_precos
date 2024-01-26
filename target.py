@@ -301,24 +301,24 @@ trace6= go.Scatter(x=df_filtro_ano['mes_extenso'],
                     y=df_filtro_ano['Curva A'],
                     mode = 'markers+lines',
                     name = 'Curva C',
-                    marker=dict(color='gray', size=11),
-                    line=dict(color='gray', width=4, dash='dash'));
+                    marker=dict(color='gray', size=6),
+                    line=dict(color='gray', width=2, dash='dash'));
 
 df_filtro_ano = df_final[(df_final['ano_x'] == 2023)]
 trace7= go.Scatter(x=df_filtro_ano['mes_extenso'],
                     y=df_filtro_ano['Curva B'],
                     mode = 'markers+lines',
                     name = 'Curva C',
-                    marker=dict(color='Tan', size=11),
-                    line=dict(color='Tan', width=4, dash='dash'));
+                    marker=dict(color='Tan', size=6),
+                    line=dict(color='Tan', width=2, dash='dash'));
 
 df_filtro_ano = df_final[(df_final['ano_x'] == 2023)]
 trace8= go.Scatter(x=df_filtro_ano['mes_extenso'],
                     y=df_filtro_ano['Curva C'],
                     mode = 'markers+lines',
                     name = 'Curva C',
-                    marker=dict(color='black', size=11),
-                    line=dict(color='black', width=4, dash='dash'));
+                    marker=dict(color='black', size=6),
+                    line=dict(color='black', width=2, dash='dash'));
 
 
 

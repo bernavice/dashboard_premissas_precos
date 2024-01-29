@@ -308,7 +308,7 @@ df_filtro_ano = df_final[(df_final['ano_x'] == 2023)]
 trace7= go.Scatter(x=df_filtro_ano['mes_extenso'],
                     y=df_filtro_ano['Curva B'],
                     mode = 'markers+lines',
-                    name = 'Curva C',
+                    name = 'Curva B',
                     marker=dict(color='Tan', size=6),
                     line=dict(color='Tan', width=2, dash='dash'));
 
@@ -316,7 +316,7 @@ df_filtro_ano = df_final[(df_final['ano_x'] == 2023)]
 trace8= go.Scatter(x=df_filtro_ano['mes_extenso'],
                     y=df_filtro_ano['Curva C'],
                     mode = 'markers+lines',
-                    name = 'Curva C',
+                    name = 'Curva A',
                     marker=dict(color='black', size=6),
                     line=dict(color='black', width=2, dash='dash'));
 
@@ -338,7 +338,7 @@ fig3 = go.Figure(
                 xref='paper', yref='paper',
                 x=0.5, y=-0.1,
                 xanchor='right', yanchor='top',
-                text='Curva A = Mínimo de 9,3 GWm de Térmicas \n, Curva B = Mínimo de 14 GWm de Térmicas \n, Curva C = Mínimo de 18 GWm de Térmicas',
+                text='Curva C = Mínimo de 9,3 GWm de Térmicas \n, Curva B = Mínimo de 14 GWm de Térmicas \n, Curva A = Mínimo de 18 GWm de Térmicas',
                 showarrow=False,
                 font=dict(size=12)
             )

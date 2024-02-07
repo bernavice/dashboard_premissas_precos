@@ -994,6 +994,176 @@ def update_line_plot(selected_variaveis):
     return fig
 
 ##########################################
+####CMARG MENSAL###
+##########################################
+
+colunas = []
+for i in range(0, 61, 1):
+    colunas.append(i)
+
+print(colunas)
+    
+
+# Leitura do arquivo Excel
+cmarg = pd.read_excel('assets/Produtos Novo.xlsx', sheet_name='cmarg001', usecols=colunas, nrows=2001)
+cmarg = cmarg.drop('Unnamed: 0', axis=1)
+
+# Criando faixas de valores
+bins = [0, 62, 100, 200, 300, float('inf')]
+labels = ['0-62 R$/MWh', '62.01-100 R$/MWh', '101-200 R$/MWh', '201-300 R$/MWh', '400+ R$/MWh']
+
+# Inicializando os dados do gráfico
+fig_data = []
+
+# Loop pelas faixas de valores
+for label in labels:
+    # Inicializando dados para a faixa atual
+    trace_data = []
+    
+    # Loop pelos meses
+    for col in cmarg.columns:
+        # Calculando percentuais para cada faixa de valores
+        counts = pd.cut(cmarg[col], bins=bins, labels=labels, right=False, include_lowest=True).value_counts(sort=False).reindex(labels) / len(cmarg[col]) * 100
+        
+        # Criando o trace para o mês atual
+        trace = go.Bar(
+            x=[col],
+            y=[counts[label].mean()],
+            name=f'{col} - {label}',
+            text=[f'{counts[label].mean():.2f}%'],
+            textposition='auto'
+        )
+        trace_data.append(trace)
+    
+    # Consolidando a barra para a faixa atual no final de cada ano
+    trace_consolidado = go.Bar(
+        x=cmarg.columns,
+        y=[trace.y[0] for trace in trace_data],
+        name=f'{label}',
+        text=[trace.text[0] for trace in trace_data],
+        textposition='auto'
+    )
+    
+    # Adicionando a barra consolidada aos dados do gráfico
+    fig_data.append(trace_consolidado)
+
+# Criando o layout do gráfico
+layoutx = go.Layout(
+    title='Cenário VE - Distribuição MENSAL do PLD SE/CO',
+    #xaxis=dict(title='Mês'),
+    yaxis=dict(title='Porcentagem (%)'),
+    barmode='stack',
+    
+)
+
+# Criando a figura do gráfico
+fig = go.Figure(data=fig_data, layout=layoutx)
+
+layout5 = html.Div(children=[dcc.Graph(figure=fig),])
+
+
+################################################
+##################Anual#########################
+################################################
+
+
+# Lista de anos
+anos = cmarg.columns.str.extract('(\d{4})').squeeze().unique()
+
+# Inicializando os dados do gráfico
+fig_data = []
+
+# Loop pelas faixas de valores
+for label in labels:
+    # Inicializando dados para a faixa atual
+    trace_data = []
+    
+    # Loop pelos anos
+    for ano in anos:
+        # Filtrando dados do ano e faixa de valores
+        cmarg_ano = cmarg.filter(regex=f"{ano}$")
+        counts = pd.cut(cmarg_ano.values.flatten(), bins=bins, labels=labels, right=False, include_lowest=True).value_counts().reindex(labels) / len(cmarg_ano.values.flatten()) * 100
+        
+        # Criando o trace para o ano atual
+        trace = go.Bar(
+            x=[ano],
+            y=[counts[label].mean()],
+            name=f'{ano} - {label}',
+            text=[f'{counts[label].mean():.2f}%'],
+            textposition='auto'
+        )
+        trace_data.append(trace)
+    
+    # Consolidando a barra para a faixa atual no final de cada ano
+    trace_consolidado = go.Bar(
+        x=anos,
+        y=[trace.y[0] for trace in trace_data],
+        name=f'Total - {label}',
+        text=[trace.text[0] for trace in trace_data],
+        textposition='auto'
+    )
+    
+    # Adicionando a barra consolidada aos dados do gráfico
+    fig_data.append(trace_consolidado)
+
+# Criando o layout do gráfico
+layouty = go.Layout(
+    title='Cenário VE - Distribuição ANUAL do PLD SE/CO',
+    xaxis=dict(zeroline=False),
+    yaxis=dict(title='Porcentagem (%)', zeroline=False),
+    barmode='stack'
+)
+
+# Criando a figura do gráfico
+fig = go.Figure(data=fig_data, layout=layouty)
+
+layout6 = html.Div(children=[dcc.Graph(figure=fig),])
+
+
+##########################
+########GSF###############
+##########################
+
+
+# Leitura do arquivo Excel
+cmarg = pd.read_excel('assets/Produtos Novo.xlsx', sheet_name='GSF', usecols=colunas, nrows=2001)
+cmarg = cmarg.drop('Unnamed: 0', axis=1)
+
+# Lista de anos
+anos = cmarg.columns.str.extract('(\d{4})').squeeze().unique()
+
+# Lista para armazenar os dados consolidados por ano
+data_list = []
+
+# Preparação dos dados
+for ano in anos:
+    cmarg_ano = cmarg.filter(regex=f"{ano}$")
+    cmarg_ano_mean = cmarg_ano.mean(axis=1)
+    data_list.append(pd.DataFrame({'Ano': [ano]*len(cmarg_ano_mean), 'GSF': cmarg_ano_mean}))
+
+# Concatenação dos dados consolidados
+cmarg_concatenado = pd.concat(data_list)
+
+# Criação do box plot consolidado por ano
+fig = px.box(cmarg_concatenado, x='Ano', y='GSF', points="all",
+             title='Cenário VE - Distribuição ANUAL do GSF',
+             labels={'GSF': 'GSF Médio (%)'})
+
+# Adição de uma linha de média ao gráfico
+media_trace = go.Scatter(x=anos, y=cmarg_concatenado.groupby('Ano')['GSF'].mean(),
+                         mode='lines+markers', name='Média')
+fig.add_trace(media_trace)
+
+# Atualização do layout
+fig.update_layout(xaxis=dict(zeroline=False), yaxis=dict(title='GSF Médio (%)', zeroline=False))
+
+layout7 = html.Div(children=[dcc.Graph(figure=fig),])
+
+
+
+##############################
+##############################
+##############################
 
 
 # Layout geral
@@ -1003,6 +1173,9 @@ app.layout = html.Div(children=[
     layout1,
     layout2,
     layout3,
+    layout5,
+    layout6,
+    layout7,
     layout4,
 ])
 

@@ -1167,7 +1167,7 @@ layout7 = html.Div(children=[dcc.Graph(figure=fig),])
 cmarg = pd.read_excel('assets/Produtos Novo.xlsx', sheet_name='ear_sin', usecols=colunas, nrows=2001)
 cmarg = cmarg.drop('Unnamed: 0', axis=1)
 
-fig = px.box(cmarg, title="EAR SIN", )  # points="all")
+fig = px.box(cmarg, title="Cenário VE - Distribuição EMNSAL do EAR SIN", )  # points="all")
 fig.update_layout(xaxis=dict(title=None, zeroline=False), boxmode='group')
 fig.update_layout(yaxis=dict(title='EAR (%EARmáx)', zeroline=False), boxmode='group')
 

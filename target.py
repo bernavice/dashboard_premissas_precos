@@ -1147,7 +1147,7 @@ cmarg_concatenado = pd.concat(data_list)
 # Criação do box plot consolidado por ano
 fig = px.box(cmarg_concatenado, x='Ano', y='GSF', points="all",
              title='Cenário VE - Distribuição ANUAL do GSF',
-             labels={'GSF': 'GSF Médio (%)'})
+             labels={'GSF': 'GSF (%)'})
 
 # Adição de uma linha de média ao gráfico
 media_trace = go.Scatter(x=anos, y=cmarg_concatenado.groupby('Ano')['GSF'].mean(),
@@ -1155,11 +1155,27 @@ media_trace = go.Scatter(x=anos, y=cmarg_concatenado.groupby('Ano')['GSF'].mean(
 fig.add_trace(media_trace)
 
 # Atualização do layout
-fig.update_layout(xaxis=dict(zeroline=False), yaxis=dict(title='GSF Médio (%)', zeroline=False))
+fig.update_layout(xaxis=dict(title=None,zeroline=False), yaxis=dict(title='GSF (%)', zeroline=False))
 
 layout7 = html.Div(children=[dcc.Graph(figure=fig),])
 
+####################################
+##########   EAR   #################
+####################################
 
+# Leitura do arquivo Excel
+cmarg = pd.read_excel('assets/Produtos Novo.xlsx', sheet_name='ear_sin', usecols=colunas, nrows=2001)
+cmarg = cmarg.drop('Unnamed: 0', axis=1)
+
+fig = px.box(cmarg, title="EAR SIN", )  # points="all")
+fig.update_layout(xaxis=dict(title=None, zeroline=False), boxmode='group')
+fig.update_layout(yaxis=dict(title='EAR (%EARmáx)', zeroline=False), boxmode='group')
+
+# Adição de uma linha de média ao gráfico
+media_trace = go.Scatter(x=cmarg.columns, y=cmarg.mean(), mode='lines+markers', name='Média')
+fig.add_trace(media_trace)
+
+layout8 = html.Div(children=[dcc.Graph(figure=fig),])
 
 ##############################
 ##############################
@@ -1176,6 +1192,7 @@ app.layout = html.Div(children=[
     layout5,
     layout6,
     layout7,
+    layout8,
     layout4,
 ])
 

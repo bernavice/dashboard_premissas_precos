@@ -104,9 +104,9 @@ fig.add_trace(
     secondary_y=False,)
 
 
-fig.add_trace(
-    go.Scatter(x=df_final['data'], y=df_final['FEN - SE CON ANU JAN/24 DEZ/24 - Preço Fixo'], name="PM 2024"),
-    secondary_y=True,)
+#fig.add_trace(
+#    go.Scatter(x=df_final['data'], y=df_final['FEN - SE CON ANU JAN/24 DEZ/24 - Preço Fixo'], name="PM 2024"),
+#    secondary_y=True,)
 
 fig.add_trace(
     go.Scatter(x=df_final['data'], y=df_final['FEN - SE CON ANU JAN/25 DEZ/25 - Preço Fixo'], name="PM 2025"),

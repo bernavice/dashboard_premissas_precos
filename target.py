@@ -930,27 +930,12 @@ traducao_meses = {'Jan': 'jan', 'Feb': 'fev', 'Mar': 'mar', 'Apr': 'abr', 'May':
 # Função para padronizar o formato das datas
 def padronizar_data(data):
 
-    try:
+    # Separa o mês e o ano
+    mes, ano = data_string.split('/')
+    # Traduz o mês usando o dicionário
+    mes_traduzido = traducao_meses.get(mes.capitalize(), mes)
+    # Retorna a data formatada
 
-        # Separa o mês e o ano
-        mes, ano = data_string.split('/')
-        # Traduz o mês usando o dicionário
-        mes_traduzido = traducao_meses.get(mes.capitalize(), mes)
-        # Retorna a data formatada
-
-    except:
-
-        # Converte o objeto Timestamp para uma string no formato 'mês/ano'
-        data_string = data.strftime('%b/%Y')        
-        # Separa o mês e o ano
-        mes, ano = data_string.split('/')
-        # Traduz o mês usando o dicionário
-        mes_traduzido = traducao_meses.get(mes.capitalize(), mes)
-        # Retorna a data formatada
-
-        
-        
-    
     return f"{mes_traduzido}/{ano}"
 
 # Aplica a função à coluna 'Time'

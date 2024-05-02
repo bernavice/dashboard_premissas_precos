@@ -929,11 +929,13 @@ traducao_meses = {'Jan': 'jan', 'Feb': 'fev', 'Mar': 'mar', 'Apr': 'abr', 'May':
 
 # Função para padronizar o formato das datas
 def padronizar_data(data):
+
     # Separa o mês e o ano
-    mes, ano = data.split('/')
+    mes, ano = data_string.split('/')
     # Traduz o mês usando o dicionário
     mes_traduzido = traducao_meses.get(mes.capitalize(), mes)
     # Retorna a data formatada
+
     return f"{mes_traduzido}/{ano}"
 
 # Aplica a função à coluna 'Time'

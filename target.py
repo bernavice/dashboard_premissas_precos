@@ -931,7 +931,7 @@ traducao_meses = {'Jan': 'jan', 'Feb': 'fev', 'Mar': 'mar', 'Apr': 'abr', 'May':
 def padronizar_data(data):
 
     # Separa o mês e o ano
-    mes, ano = data_string.split('/')
+    mes, ano = data.split('/')
     # Traduz o mês usando o dicionário
     mes_traduzido = traducao_meses.get(mes.capitalize(), mes)
     # Retorna a data formatada

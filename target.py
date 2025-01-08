@@ -495,7 +495,7 @@ fig4.update_yaxes(title_text="ENA (MWm)", row=2, col=2)
 
 fig4.update_layout(
     height=800, 
-    width=2200, 
+    width=1800, 
     title_text="Energia Natural Afluente dos Submercados (ENAs)", 
     title_x=0.5, 
     title_y=0.95, 

@@ -11,12 +11,12 @@ app = Dash(__name__) # criando o seu aplicativo Dash
 server = app.server
 
 
-teste_df = pd.read_excel('assets/teste.xlsx')
-teste_df_ipdo = pd.read_excel('assets/testeipdo.xlsx')
-df_ultima_update_pld_bd0 = pd.read_excel('assets/testepld.xlsx')
+teste_df = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\teste.xlsx')
+teste_df_ipdo = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\testeipdo.xlsx')
+df_ultima_update_pld_bd0 = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\testepld.xlsx')
 
 df_rdh_ipdo = pd.merge(teste_df, teste_df_ipdo, how = 'left', on = 'data')
-df_rdh_ipdo.to_excel('assets/teste_rdh_ipdo.xlsx')
+df_rdh_ipdo.to_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\teste_rdh_ipdo.xlsx')
 df_rdh_ipdo = df_rdh_ipdo.fillna(method='ffill')
 #print('df_rdh_ipdo')
 #display(df_rdh_ipdo)
@@ -24,13 +24,13 @@ df_ultima_update_pld_bd0 = df_ultima_update_pld_bd0.round(2)
 df_final = pd.merge(df_ultima_update_pld_bd0, df_rdh_ipdo, how = 'left', on = 'data')
 #print(df_ultima_update_pld_bd0)
 
-dfmercado = pd.read_excel(r'assets/me3.xlsx')
+dfmercado = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\me3.xlsx')
 df_final = pd.merge(df_final, dfmercado, how = 'left', on = 'data')
 df_final.fillna(method='ffill', inplace=True)
 
 
 #display(df_ultima_update_pld_bd0)
-df_final.to_excel('assets/df_final.xlsx')
+df_final.to_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\df_final.xlsx')
 #display(df_final)
 df_final.describe()
 df_final.info()
@@ -296,6 +296,12 @@ trace5 = go.Scatter(x=df_filtro_ano['mes_extenso'],
                     mode = 'markers+lines',
                     name = 'earsin_2024',);
 
+df_filtro_ano = df_final[(df_final['ano_x'] == 2025)]
+trace9 = go.Scatter(x=df_filtro_ano['mes_extenso'],
+                    y=df_filtro_ano['earsin'],
+                    mode = 'markers+lines',
+                    name = 'earsin_2025',);
+
 df_filtro_ano = df_final[(df_final['ano_x'] == 2023)]
 trace6= go.Scatter(x=df_filtro_ano['mes_extenso'],
                     y=df_filtro_ano['Curva A'],
@@ -322,7 +328,7 @@ trace8= go.Scatter(x=df_filtro_ano['mes_extenso'],
 
 
 
-data = [trace1, trace2, trace3, trace4, trace5, trace6, trace7, trace8]
+data = [trace1, trace2, trace3, trace4, trace5, trace9, trace6, trace7, trace8]
 
 #layout = go.layout(title:'% do Armazenamento máximo dos reservatórios (MWm) %EARmáx', yaxis={'%EARmáx'})
 
@@ -419,7 +425,20 @@ trace55 = go.Scatter(x=df_filtro_ano['mes_dia'],
                     name = 'MM_7d_earsin_2024',);
 
 
-data = [trace1, trace2, trace3, trace4, trace5, trace11, trace22, trace33, trace44, trace55]
+df_filtro_ano = df_final[(df_final['ano_x'] == 2025)]
+trace6 = go.Scatter(x=df_filtro_ano['mes_dia'],
+                    y=df_filtro_ano['tx_var_ear_sin'],
+                    mode = 'lines',
+                    name = 'earsin_2025',);
+
+df_filtro_ano = df_final[(df_final['ano_x'] == 2025)]
+trace66 = go.Scatter(x=df_filtro_ano['mes_dia'],
+                    y=df_filtro_ano['tx_var_ear_sin_rolling'],
+                    mode = 'lines',
+                    name = 'MM_7d_earsin_2025',);
+
+
+data = [trace1, trace2, trace3, trace4, trace5, trace6, trace11, trace22, trace33, trace44, trace55, trace66]
 
 #layout = go.layout(title:'% do Armazenamento máximo dos reservatórios (MWm) %EARmáx', yaxis={'%EARmáx'})
 
@@ -471,7 +490,14 @@ fig4.update_yaxes(title_text="ENA (MWm)", row=2, col=2)
 
 
 
-fig4.update_layout(height=700, width=1100, title_text="Energia Natural Afluênte dos Submercados (ENAs)", showlegend=False)
+fig4.update_layout(
+    height=800, 
+    width=2200, 
+    title_text="Energia Natural Afluente dos Submercados (ENAs)", 
+    title_x=0.5, 
+    title_y=0.95, 
+    showlegend=False, 
+    margin=dict(l=200, r=150, t=100, b=100))
 
 
 
@@ -485,7 +511,7 @@ fig5 = go.Figure(data=[go.Table(header=dict(values=['Data', 'ENA SE/CO', 'ENA SU
                  cells=dict(values=[teste_df['data'], teste_df['enasepp'], teste_df['enasupp'], teste_df['enanepp'], teste_df['enanpp'], teste_df['enasinpp']]))
                      ])
 
-fig5.update_layout(title_text="ENAs (%MLT)", template='plotly')
+fig5.update_layout(title_text="ENAs (%MLT)", template='plotly', width=1100)
 
 
 
@@ -542,7 +568,7 @@ fig9.update_layout(title_text="PLDs SUBMERCADO - MÉDIA DIÁRIA (R$/MWh)", templ
 
 # Calcular média mensal
 
-df = pd.read_excel(r'assets/testepld.xlsx')
+df = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\testepld.xlsx')
 
 df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y')
 df.set_index('data', inplace=True)
@@ -698,7 +724,7 @@ def convert_date(date_str):
         return date_str
 
 # DataFrame
-df = pd.read_csv(r'assets/csv_historico_pld.csv', sep=';', decimal=',', converters={'Hora': convert_date})
+df = pd.read_csv(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\csv_historico_pld.csv', sep=';', decimal=',', converters={'Hora': convert_date})
 
 # Lista de colunas de datas
 colunas_datas = [coluna for coluna in df.columns if (coluna != 'Hora' and coluna != 'Submercado')]
@@ -770,7 +796,7 @@ import plotly.graph_objects as go
 
 
 
-dfmercado = pd.read_excel(r'assets/me3.xlsx')
+dfmercado = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\me3.xlsx')
 
 
 # Callback para atualizar o gráfico com base nas colunas selecionadas
@@ -812,7 +838,7 @@ layout3 = html.Div([
     dcc.Dropdown(
         id='column-dropdown2',
         options=[{'label': col, 'value': col} for col in dfmercado.columns[1:]],
-        value=['FEN - SE CON ANU JAN/24 DEZ/24 - Preço Fixo'],
+        value=['FEN - SE CON TRI OUT/25 DEZ/25 - Preço Fixo'],
         multi=True
     ),
     dcc.Graph(id='line-plot2')
@@ -844,7 +870,7 @@ from locale import setlocale, LC_TIME
 locale.setlocale(locale.LC_TIME, 'C')
 #setlocale(LC_TIME, 'pt_BR.utf-8')
 
-df_bd = pd.read_excel(r'assets/bd_rodada.xlsx')
+df_bd = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\bd_rodada.xlsx')
 
 # DataFrame A
 A_data = {
@@ -1004,10 +1030,13 @@ for i in range(0, 61, 1):
     colunas.append(i)
 
 print(colunas)
+
+temp_df = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\Produtos Novo.xlsx', sheet_name='cmarg001', nrows=1)
+print(temp_df.columns)  # Lista as colunas disponíveis
     
 
 # Leitura do arquivo Excel
-cmarg = pd.read_excel('assets/Produtos Novo.xlsx', sheet_name='cmarg001', usecols=colunas, nrows=2001)
+cmarg = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\Produtos Novo.xlsx', sheet_name='cmarg001', usecols=temp_df.columns, nrows=2001)
 cmarg = cmarg.drop('Unnamed: 0', axis=1)
 
 # Criando faixas de valores
@@ -1128,7 +1157,7 @@ layout6 = html.Div(children=[dcc.Graph(figure=fig),])
 
 
 # Leitura do arquivo Excel
-cmarg = pd.read_excel('assets/Produtos Novo.xlsx', sheet_name='GSF', usecols=colunas, nrows=2001)
+cmarg = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\Produtos Novo.xlsx', sheet_name='GSF', usecols=temp_df.columns, nrows=2001)
 cmarg = cmarg.drop('Unnamed: 0', axis=1)
 
 # Lista de anos
@@ -1166,7 +1195,7 @@ layout7 = html.Div(children=[dcc.Graph(figure=fig),])
 ####################################
 
 # Leitura do arquivo Excel
-cmarg = pd.read_excel('assets/Produtos Novo.xlsx', sheet_name='ear_sin', usecols=colunas, nrows=2001)
+cmarg = pd.read_excel(r'C:\Users\Bernardo\Downloads\dashboard_premissas_precos\assets\Produtos Novo.xlsx', sheet_name='ear_sin', usecols=temp_df.columns, nrows=2001)
 cmarg = cmarg.drop('Unnamed: 0', axis=1)
 
 fig = px.box(cmarg, title="Cenário VE - Distribuição MENSAL do EAR SIN", )  # points="all")

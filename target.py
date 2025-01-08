@@ -500,7 +500,7 @@ fig4.update_layout(
     title_x=0.5, 
     title_y=0.95, 
     showlegend=False, 
-    margin=dict(l=200, r=150, t=100, b=100))
+    margin=dict(l=100, r=150, t=100, b=100))
 
 
 

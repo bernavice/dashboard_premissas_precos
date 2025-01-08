@@ -6,6 +6,9 @@ from plotly.subplots import make_subplots
 import plotly.graph_objs as go
 from dash import Dash, Input, Output
 import numpy as np
+import os
+
+print("Diretório atual:", os.getcwd())
 
 app = Dash(__name__) # criando o seu aplicativo Dash
 server = app.server

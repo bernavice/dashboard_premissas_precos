@@ -10,13 +10,13 @@ import numpy as np
 app = Dash(__name__) # criando o seu aplicativo Dash
 server = app.server
 
-#
-teste_df = pd.read_excel('teste.xlsx')
-teste_df_ipdo = pd.read_excel('testeipdo.xlsx')
-df_ultima_update_pld_bd0 = pd.read_excel('testepld.xlsx')
+
+teste_df = pd.read_excel(r'assets\teste.xlsx')
+teste_df_ipdo = pd.read_excel(r'assets\testeipdo.xlsx')
+df_ultima_update_pld_bd0 = pd.read_excel(r'assets\testepld.xlsx')
 
 df_rdh_ipdo = pd.merge(teste_df, teste_df_ipdo, how = 'left', on = 'data')
-df_rdh_ipdo.to_excel('teste_rdh_ipdo.xlsx')
+df_rdh_ipdo.to_excel(r'assets\teste_rdh_ipdo.xlsx')
 df_rdh_ipdo = df_rdh_ipdo.fillna(method='ffill')
 #print('df_rdh_ipdo')
 #display(df_rdh_ipdo)
@@ -24,13 +24,13 @@ df_ultima_update_pld_bd0 = df_ultima_update_pld_bd0.round(2)
 df_final = pd.merge(df_ultima_update_pld_bd0, df_rdh_ipdo, how = 'left', on = 'data')
 #print(df_ultima_update_pld_bd0)
 
-dfmercado = pd.read_excel('me3.xlsx')
+dfmercado = pd.read_excel(r'assets\me3.xlsx')
 df_final = pd.merge(df_final, dfmercado, how = 'left', on = 'data')
 df_final.fillna(method='ffill', inplace=True)
 
 
 #display(df_ultima_update_pld_bd0)
-df_final.to_excel('df_final.xlsx')
+df_final.to_excel(r'assets\df_final.xlsx')
 #display(df_final)
 df_final.describe()
 df_final.info()
@@ -568,7 +568,7 @@ fig9.update_layout(title_text="PLDs SUBMERCADO - MÉDIA DIÁRIA (R$/MWh)", templ
 
 # Calcular média mensal
 
-df = pd.read_excel('testepld.xlsx')
+df = pd.read_excel(r'assets\testepld.xlsx')
 
 df['data'] = pd.to_datetime(df['data'], format='%d/%m/%Y')
 df.set_index('data', inplace=True)
@@ -724,7 +724,7 @@ def convert_date(date_str):
         return date_str
 
 # DataFrame
-df = pd.read_csv('csv_historico_pld.csv', sep=';', decimal=',', converters={'Hora': convert_date})
+df = pd.read_csv(r'assets\csv_historico_pld.csv', sep=';', decimal=',', converters={'Hora': convert_date})
 
 # Lista de colunas de datas
 colunas_datas = [coluna for coluna in df.columns if (coluna != 'Hora' and coluna != 'Submercado')]
@@ -796,7 +796,7 @@ import plotly.graph_objects as go
 
 
 
-dfmercado = pd.read_excel('me3.xlsx')
+dfmercado = pd.read_excel(r'assets\me3.xlsx')
 
 
 # Callback para atualizar o gráfico com base nas colunas selecionadas
@@ -870,7 +870,7 @@ from locale import setlocale, LC_TIME
 locale.setlocale(locale.LC_TIME, 'C')
 #setlocale(LC_TIME, 'pt_BR.utf-8')
 
-df_bd = pd.read_excel('bd_rodada.xlsx')
+df_bd = pd.read_excel(r'assets\bd_rodada.xlsx')
 
 # DataFrame A
 A_data = {
@@ -1031,12 +1031,12 @@ for i in range(0, 61, 1):
 
 print(colunas)
 
-temp_df = pd.read_excel('Produtos Novo.xlsx', sheet_name='cmarg001', nrows=1)
+temp_df = pd.read_excel(r'assets\Produtos Novo.xlsx', sheet_name='cmarg001', nrows=1)
 print(temp_df.columns)  # Lista as colunas disponíveis
     
 
 # Leitura do arquivo Excel
-cmarg = pd.read_excel('Produtos Novo.xlsx', sheet_name='cmarg001', usecols=temp_df.columns, nrows=2001)
+cmarg = pd.read_excel(r'assets\Produtos Novo.xlsx', sheet_name='cmarg001', usecols=temp_df.columns, nrows=2001)
 cmarg = cmarg.drop('Unnamed: 0', axis=1)
 
 # Criando faixas de valores
@@ -1157,7 +1157,7 @@ layout6 = html.Div(children=[dcc.Graph(figure=fig),])
 
 
 # Leitura do arquivo Excel
-cmarg = pd.read_excel('Produtos Novo.xlsx', sheet_name='GSF', usecols=temp_df.columns, nrows=2001)
+cmarg = pd.read_excel(r'assets\Produtos Novo.xlsx', sheet_name='GSF', usecols=temp_df.columns, nrows=2001)
 cmarg = cmarg.drop('Unnamed: 0', axis=1)
 
 # Lista de anos
@@ -1195,7 +1195,7 @@ layout7 = html.Div(children=[dcc.Graph(figure=fig),])
 ####################################
 
 # Leitura do arquivo Excel
-cmarg = pd.read_excel('Produtos Novo.xlsx', sheet_name='ear_sin', usecols=temp_df.columns, nrows=2001)
+cmarg = pd.read_excel(r'assets\Produtos Novo.xlsx', sheet_name='ear_sin', usecols=temp_df.columns, nrows=2001)
 cmarg = cmarg.drop('Unnamed: 0', axis=1)
 
 fig = px.box(cmarg, title="Cenário VE - Distribuição MENSAL do EAR SIN", )  # points="all")

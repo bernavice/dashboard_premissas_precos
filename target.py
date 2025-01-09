@@ -996,7 +996,7 @@ layout4 = html.Div([
     dcc.Dropdown(
         id='variavel-dropdown4',
         options=[{'label': variavel, 'value': variavel} for variavel in dfbd['Variável'].unique()],
-        value=variavel_selecionada,
+        value=['PLD SE/CO VE'],
         multi=True,
     ),
     # Gráfico de linhas e marcadores (scatter plot)

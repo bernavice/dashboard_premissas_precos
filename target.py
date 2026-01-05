@@ -305,6 +305,14 @@ trace9 = go.Scatter(x=df_filtro_ano['mes_extenso'],
                     mode = 'markers+lines',
                     name = 'earsin_2025',);
 
+
+df_filtro_ano = df_final[(df_final['ano_x'] == 2026)]
+trace10 = go.Scatter(x=df_filtro_ano['mes_extenso'],
+                    y=df_filtro_ano['earsin'],
+                    mode = 'markers+lines',
+                    name = 'earsin_2026',);
+
+
 df_filtro_ano = df_final[(df_final['ano_x'] == 2023)]
 trace6= go.Scatter(x=df_filtro_ano['mes_extenso'],
                     y=df_filtro_ano['Curva A'],
@@ -331,7 +339,7 @@ trace8= go.Scatter(x=df_filtro_ano['mes_extenso'],
 
 
 
-data = [trace1, trace2, trace3, trace4, trace5, trace9, trace6, trace7, trace8]
+data = [trace1, trace2, trace3, trace4, trace5, trace9, trace6, trace7, trace8, trace10]
 
 #layout = go.layout(title:'% do Armazenamento máximo dos reservatórios (MWm) %EARmáx', yaxis={'%EARmáx'})
 
@@ -441,7 +449,20 @@ trace66 = go.Scatter(x=df_filtro_ano['mes_dia'],
                     name = 'MM_7d_earsin_2025',);
 
 
-data = [trace1, trace2, trace3, trace4, trace5, trace6, trace11, trace22, trace33, trace44, trace55, trace66]
+df_filtro_ano = df_final[(df_final['ano_x'] == 2026)]
+trace7 = go.Scatter(x=df_filtro_ano['mes_dia'],
+                    y=df_filtro_ano['tx_var_ear_sin'],
+                    mode = 'lines',
+                    name = 'earsin_2026',);
+
+df_filtro_ano = df_final[(df_final['ano_x'] == 2026)]
+trace77 = go.Scatter(x=df_filtro_ano['mes_dia'],
+                    y=df_filtro_ano['tx_var_ear_sin_rolling'],
+                    mode = 'lines',
+                    name = 'MM_7d_earsin_2026',);
+
+
+data = [trace1, trace2, trace3, trace4, trace5, trace6, trace11, trace22, trace33, trace44, trace55, trace66, trace77]
 
 #layout = go.layout(title:'% do Armazenamento máximo dos reservatórios (MWm) %EARmáx', yaxis={'%EARmáx'})
 
